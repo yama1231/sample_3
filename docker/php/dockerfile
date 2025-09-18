@@ -1,0 +1,14 @@
+FROM php:8.1-apache
+
+
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+
+# その他の必要なパッケージ
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        git \
+        unzip \
+        && rm -rf /var/lib/apt/lists/*
+
+COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+

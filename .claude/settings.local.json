@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:qiita.com)",
+      "Bash(mkdir:*)",
+      "Bash(docker-compose up:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

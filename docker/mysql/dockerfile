@@ -1,0 +1,3 @@
+FROM mysql:8.1
+
+COPY ./docker/mysql/my.cnf /etc/my.cnf
