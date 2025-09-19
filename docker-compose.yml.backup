@@ -18,7 +18,9 @@ services:
   # MySQL
   db:
     container_name: mysql_host_3
-    image: mysql:8.1
+    build: 
+      context: .
+      dockerfile: ./docker/mysql/dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: roottt
       MYSQL_DATABASE: test_db
@@ -28,7 +30,7 @@ services:
     volumes:
       - ./public/docker/db/data:/var/lib/mysql
       - ./public/docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/mysql-init:/docker-entrypoint-initdb.d:ro
+      - ./mysql-init:/docker-entrypoint-initdb.d:ro  # :ro で読み取り専用
     ports:
       - 3306:3306
 

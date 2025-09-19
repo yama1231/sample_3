@@ -1,0 +1,9 @@
+CREATE TABLE sample (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ban INT(11),
+    name VARCHAR(11) NOT NULL,
+    number VARCHAR(15) NOT NULL,
+    member INT(11),
+    day DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
