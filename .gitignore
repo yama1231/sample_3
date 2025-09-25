@@ -9,4 +9,3 @@ public/docker/db/data/
 # Thumbs.db
 .env
 public/config.php
-docker-compose.yml.backup
