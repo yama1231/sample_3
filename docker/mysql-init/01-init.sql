@@ -1,6 +1,9 @@
+CREATE DATABASE IF NOT EXISTS myapp CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE myapp;
+
+
 CREATE TABLE sample (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    ban INT(11),
+    ban INT AUTO_INCREMENT(11),
     name VARCHAR(11) NOT NULL,
     number VARCHAR(15) NOT NULL,
     member INT(11),

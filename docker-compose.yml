@@ -20,10 +20,10 @@ services:
     container_name: mysql_host_3
     image: mysql:8.1
     environment:
-      MYSQL_ROOT_PASSWORD: roottt
-      MYSQL_DATABASE: test_db
-      MYSQL_USER: test_user
-      MYSQL_PASSWORD: test_password
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: 'Asia/Tokyo'
     volumes:
       - ./public/docker/db/data:/var/lib/mysql
@@ -37,7 +37,7 @@ services:
     image: phpmyadmin/phpmyadmin
     environment:
       PMA_HOST: db
-      MYSQL_ROOT_PASSWORD: roottt
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - 8081:80
     depends_on:

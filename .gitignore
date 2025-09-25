@@ -2,8 +2,11 @@
 public/docker/db/data/
 
 # その他よくある除外項目
-node_modules/
+# node_modules/
+# .env
+# *.log
+# .DS_Store
+# Thumbs.db
 .env
-*.log
-.DS_Store
-Thumbs.db
+public/config.php
+docker-compose.yml.backup
