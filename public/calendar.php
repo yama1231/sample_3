@@ -25,20 +25,33 @@
     }
 
     function getreservation(){
-        global $pdo;  // グローバル変数を使用
+        global $pdo;  
         try {
             $ps = $pdo->query("SELECT * FROM sample");
         } catch (PDOException $e) {
             throw new Exception("データ取得エラー: " . $e->getMessage());
         }
         $reservation_member = array();
+        $member_out = 0;
+        //$out['day']がひとつ前のレコードの$out['day']と同じなら加算
+        $previous_day_out = '';
         foreach($ps as $out){
             $day_out = strtotime((string) $out['day']);
-            $member_out = (string) $out['member'];
-            $reservation_member[date('Y-m-d', $day_out)] = $member_out;
+            $reservation_member[] = date('Y-m-d', $day_out);
+            $member_out = $out['member'];
+            $date_key = date('Y-m-d', $day_out);
+            if (isset($reservation_member[$date_key])) {
+                // 既存の値に加算
+                $reservation_member[$date_key] += $member_out;
+            } else {
+                // 新規作成
+                $reservation_member[$date_key] = $member_out;
+            }
+
+
+
         }
-        // ksort($reservation_member);
-        return $reservation_member;
+    return $reservation_member;
     }
 
 
@@ -183,15 +196,25 @@
         $reservation = reservation(date("Y-m-d",strtotime($date)),$reservation_array);
         if($today == $date){
             //今日の場合
-            $week .= '<td class="today">' . $day;//今日の場合はclassにtodayをつける
+            if(reservation(date("Y-m-d",strtotime($date)),$reservation_array)){
+                $week .= '<td class="today">' . $day . $reservation;
+            }else{
+                $week .= '<td class="today">' . $day;
+            }
         }elseif(display_to_Holidays(date("Y-m-d",strtotime($date)),$Holidays_array)){
-            //祝日が存在していたら祝日名を追加しclassにholidayを追加する
+        // 祝日が存在していたら祝日名を追加しclassにholidayを追加する
+            if(reservation(date("Y-m-d",strtotime($date)),$reservation_array)){
+                $week .= '<td class="holiday">' . $day . $Holidays_day . $reservation;
+            }else{
             $week .= '<td class="holiday">' . $day . $Holidays_day;
-        }elseif(reservation(date("Y-m-d",strtotime($date)),$reservation_array)){
-            $week .= '<td>' . $day . $reservation;
+            }
         }else{
             //上２つ以外なら
+            if(reservation(date("Y-m-d",strtotime($date)),$reservation_array)){
+            $week .= '<td>' . $day . $reservation;
+            }else{
             $week .= '<td>' . $day;
+            }
         }
         $week .= '</td>';
         if($youbi % 7 == 6 || $day == $day_count){//週終わり、月終わりの場合
